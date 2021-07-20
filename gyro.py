@@ -58,37 +58,29 @@ def go_straight(speed, left_wheels, right_wheels, cal, direc="forward", threshol
     straight_thread.start()
     return sensor, straight_thread
 
-def turn_by_angle(direction, angle, m1, m2, cal, speed=40):
-    # TODO: Why this is done?
-    angle-=10
+def turn_by_angle(direction, angle, m1, m2, cal, speed=35):
     i2c = board.I2C()
     sensor = adafruit_bno055.BNO055_I2C(i2c)
     if direction == "r":
-        # TODO: Use the values from config file.
-        m1.forward(speed-10)
+        m1.forward(speed+cal)
         m2.reverse(speed)
-        euler = sensor.euler[0]
+        euler = 0
         #print(euler)
-        # TODO: What is 355?
-        while (euler == None or euler < angle) or euler > 355:
-            #print(euler)
+        while euler < angle-5 or euler > euler+5:
             time.sleep(0.01)
             euler = sensor.euler[0]
             if euler == None:
                 euler = 0
     else:
-        m1.reverse(speed-10)
+        m1.reverse(speed+cal)
         m2.forward(speed)
-        euler = sensor.euler[0]
-        # What is 95
-        while (euler == None or euler > 360-angle) or euler < 95:
-            #print(euler)
+        euler = 0
+        while euler > 365-angle or euler < 355-angle:
             time.sleep(0.01)
             euler = sensor.euler[0]
             if euler == None:
                 euler = 0
     m1.stop()
     m2.stop()
-    print(euler)
     return sensor
 
