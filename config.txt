@@ -1,2 +1,2 @@
 motor -10
-ultra 5
+ultra 22

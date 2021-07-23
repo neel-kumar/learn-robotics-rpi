@@ -4,6 +4,7 @@ import time
 import threading
 
 print("Press control c to end the program")
+time.sleep(0.5)
 
 TRIG = 5
 ECHO = 6
@@ -34,7 +35,7 @@ try:
                 avgDistance=avgDistance+distance
     
                 avgDistance=avgDistance/5
-                print("Distance to object in front of ultrasonic sensor(may not always be accurate):", avgDistance)
+                print("Distance to object in front of ultrasonic sensor(may not always be accurate):", distance)
 except KeyboardInterrupt:
     pass
 finally:
