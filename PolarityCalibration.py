@@ -4,18 +4,8 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setwarnings(False)
-# Right Motor
-if config.read("rightrev")[0] == "f":
-    m2 = PiMotor.Motor("MOTOR2",1)
-else:
-    m2 = PiMotor.Motor("MOTOR2",2)
-
-# Left Motor
-if config.read("leftrev")[0] == "f":
-    m1 = PiMotor.Motor("MOTOR1",1)
-else:
-    m1 = PiMotor.Motor("MOTOR1",2)
-
+m1 = PiMotor.Motor("MOTOR1",1)
+m2 = PiMotor.Motor("MOTOR2",1)
 
 m1.forward(40)
 m2.reverse(40)
