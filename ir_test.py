@@ -2,8 +2,8 @@ import PiMotor
 import RPi.GPIO as GPIO
 import time
 
-ir1 = 1 # Left IR sensor
-ir2 = 14 # Right IR sensor
+ir1 = 18 # Left IR sensor
+ir2 = 4 # Right IR sensor
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(ir1,GPIO.IN)

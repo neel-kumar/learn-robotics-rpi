@@ -5,18 +5,27 @@ import config
 GPIO.setmode(GPIO.BCM) 
 GPIO.setwarnings(False)
 
-left_motor = PiMotor.Motor("MOTOR1",2)
-right_motor = PiMotor.Motor("MOTOR2",1)
-cal = config.read("motor")
+cal = int(config.read("motor"))
+# Right Motor
+if config.read("rightrev")[0] == "f":
+    m2 = PiMotor.Motor("MOTOR2",1)
+else:
+    m2 = PiMotor.Motor("MOTOR2",2)
+
+# Left Motor
+if config.read("leftrev")[0] == "f":
+    m1 = PiMotor.Motor("MOTOR1",1)
+else:
+    m1 = PiMotor.Motor("MOTOR1",2)
 
 input("Find a long space to calibrate the motors. When you press enter the calibration will commence.")
 
 while True:
-    left_motor.forward(40 + cal)
-    right_motor.forward(40)
+    m1.forward(40 + cal)
+    m2.forward(40)
     drift_direc = input("Write the direction the robot is drifting in or press enter when the drift is negligible. ")
-    left_motor.stop()
-    right_motor.stop()
+    m1.stop()
+    m2.stop()
     if drift_direc != "right" and drift_direc != "left":
         break
     else:

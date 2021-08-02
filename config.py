@@ -4,7 +4,7 @@ def read(key, config_file="config.txt"):
     for line in config_lines:
         split_line = line.split(" ")
         if split_line[0] == key:
-            val = int(split_line[1])
+            val = split_line[1]
     config.close()
     return val
 

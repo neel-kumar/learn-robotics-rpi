@@ -5,23 +5,32 @@ from ultrasonic_sensor import ultra
 from gyro import go_straight
 import config
 
-ir1 = 1
-ir2 = 14
+ir1 = 18
+ir2 = 4
 
 GPIO.setup(ir1,GPIO.IN)
 GPIO.setup(ir2,GPIO.IN)
 
-m1 = PiMotor.Motor("MOTOR1",2) # Left Wheel
-m2 = PiMotor.Motor("MOTOR2",1) # Right Wheel
+# Right Motor
+if config.read("rightrev")[0] == "f":
+    m2 = PiMotor.Motor("MOTOR2",1)
+else:
+    m2 = PiMotor.Motor("MOTOR2",2)
+
+# Left Motor
+if config.read("leftrev")[0] == "f":
+    m1 = PiMotor.Motor("MOTOR1",1)
+else:
+    m1 = PiMotor.Motor("MOTOR1",2)
 
 ultra = ultra()
-ultra_dist = config.read("ultra")
-motor_cal = config.read("motor")
+ultra_dist = int(config.read("ultra"))
+motor_cal = int(config.read("motor"))
 
-def turn_till_clear(ir1=ir1, ir2=ir2, ultra=ultra, speed=40, m1=m1, m2=m2, cal=motor_cal):
+def turn_till_clear(ir1=ir1, ir2=ir2, ultra=ultra, speed=40, m1=m1, m2=m2, cal=motor_cal, ultrad=ultra_dist):
     m1.forward(speed+cal)
     m2.reverse(speed)
-    while GPIO.input(ir1) == 0 or GPIO.input(ir2) == 0 or ultra.get_dist() < 5:
+    while GPIO.input(ir1) == 0 or GPIO.input(ir2) == 0 or ultra.get_dist() < ultrad:
         time.sleep(0.01)
     m1.stop()
     m2.stop()
