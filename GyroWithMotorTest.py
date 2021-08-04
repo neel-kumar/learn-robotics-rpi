@@ -43,7 +43,7 @@ try:
 except Exception as e:
     print('ERROR:', e)
 finally:
-    left_wheel.stop()
-    right_wheel.stop()
+    m1.stop()
+    m2.stop()
     GPIO.cleanup()
 
